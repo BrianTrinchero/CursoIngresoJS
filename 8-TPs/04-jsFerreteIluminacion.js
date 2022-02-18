@@ -7,6 +7,8 @@ D.  Si compra 3  lamparitas bajo consumo marca "ArgentinaLuz"  el descuento es d
 E.  Si el importe final con descuento suma más de $120  se debe sumar un 10% de ingresos brutos en informar del impuesto con el siguiente mensaje:
  ”Usted pago X de IIBB.”, siendo X el impuesto que se pagó. 
 
+Brian Trinchero Div Z
+Tp/4 Ferrete Iluminacion
  */
 function CalcularPrecio () 
 {
@@ -15,84 +17,84 @@ function CalcularPrecio ()
     let descuento;
     let marcaLamparas;
     let precioTotal;
-    let impuesto
+    let precioNeto;
+    let impuesto;
 
     precioLamparas = 35;
 
     totalLamparas = document.getElementById('txtIdCantidad').value;
     totalLamparas = parseFloat(totalLamparas);
 
+
     marcaLamparas = document.getElementById('Marca').value;
 
     precioTotal = precioLamparas * totalLamparas;
 
-    impuesto = precioTotal * 0.10
+    impuesto = precioTotal * 0.10;
 
-    if(totalLamparas > 5)
+    if(totalLamparas > 0)
     {
-        descuento = 0.50;
+        switch (totalLamparas)
+        {
+            case 1:
+            case 2:
+                descuento = 0;
+                break;
+            case 3:
+                switch(marcaLamparas)
+                {
+                    case "ArgentinaLuz":
+                        descuento = 0.15;
+                        break;
+                    case "FelipeLamparas":
+                        descuento = 0.10;
+                        break;
+                    default:
+                        descuento = 0.05;
+                        break;
+                }
+                break;
+            case 4:
+                switch(marcaLamparas)
+                {
+                    case "ArgentinaLuz":
+                    case "FelipeLamparas":
+                        descuento = 0.25;
+                        break;
+                    default:
+                        descuento = 0.20;
+                        break;
+                }
+                break;
+            case 5:
+                switch(marcaLamparas)
+                {
+                    case "ArgentinaLuz":
+                        descuento = 0.40;
+                        break;
+                    default:
+                        descuento = 0.30;
+                        break;
+                }
+                break;
+            default:
+                descuento = 0.50;
+                break;
+        }
+
+
+        precioNeto = precioTotal - (precioTotal * descuento);
+
+        if(precioTotal > 120)
+        {
+            precioNeto = precioNeto + impuesto;
+            alert("IIBB Usted pago $" + impuesto);
+        }
+
+        document.getElementById('txtIdprecioDescuento').value = precioTotal;
     }
     else
     {
-        if(totalLamparas == 5 )
-        {
-            if(marcaLamparas == 'ArgentinaLuz')
-            {
-                descuento = 0.40;
-            }
-            else
-            {
-                descuento = 0.30;
-            }
-        }
-        else
-        {
-            if(totalLamparas == 4)
-            {
-                if(marcaLamparas == 'ArgentinaLuz' || marcaLamparas == 'Felipelamparas')
-                {
-                    descuento = 0.25;
-                }
-                else
-                {
-                descuento == 0.20;
-                }
-            }
-            else
-            {
-                if(totalLamparas == 3)
-                {
-                    if(marcaLamparas == 'ArgentinaLuz')
-                    {
-                        descuento = 0.15;
-                    }
-                    else
-                    {
-                        if(marcaLamparas == 'Felipelamparas')
-                        {
-                            descuento == 0.10;
-                        }
-                        else
-                        {
-                            descuento = 0.05;
-                        }
-                    }
-                }
-                else
-                {
-                    descuento = 0;
-                }
-            }
-        }
-    }   
-
-    precioTotal = precioTotal - (precioTotal * descuento);
-
-    if(precioTotal > 120)
-    {
-        precioTotal = precioTotal + impuesto;
-        alert("IIBB Usted pago $" + impuesto);
+        alert("El número ingresado no es válido");
     }
-
-    document.getElementById('txtIdprecioDescuento').value = precioTotal;
 }
